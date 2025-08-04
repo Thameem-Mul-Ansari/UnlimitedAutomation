@@ -1,0 +1,122 @@
+:root {
+    --primary: #3a86ff;
+    --secondary: #8338ec;
+    --tertiary: #ff006e;
+    --accent: #fb5607;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gradient-1: linear-gradient(135deg, #3a86ff 0%, #8338ec 100%);
+    --gradient-2: linear-gradient(135deg, #ff006e 0%, #fb5607 100%);
+    --gradient-3: linear-gradient(135deg, #8338ec 0%, #ff006e 100%);
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: var(--light);
+  }
+  
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  main {
+    flex: 1;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background: var(--gradient-1);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-secondary {
+    background: var(--gradient-2);
+  }
+  
+  .section {
+    padding: 5rem 0;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .gradient-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: var(--gradient-1);
+  }
+  
+  /* Grid layouts */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 992px) {
+    .grid-3, .grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 {
+      grid-template-columns: 1fr;
+    }
+    
+    .section {
+      padding: 3rem 0;
+    }
+  }
