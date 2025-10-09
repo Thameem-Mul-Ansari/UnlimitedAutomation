@@ -22,7 +22,7 @@ function App() {
   }, []);
 
   const handleLogin = (username, password) => {
-    if (username === 'admin' && password === 'Password') {
+    if (username === 'admin' && password === 'ResetForce2025') {
       setIsAuthenticated(true);
       localStorage.setItem('isAuthenticated', 'true');
       setIsLoginModalOpen(false);
