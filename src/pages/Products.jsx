@@ -4,7 +4,7 @@ import {
   FaRobot, FaDatabase, FaDesktop, FaCloud, FaQrcode,FaClock, FaMoneyBill ,FaDisease ,
   FaChartBar, FaClipboardList, FaFileInvoiceDollar, FaStar, FaUsers,FaLinkedin ,
   FaArrowRight, FaCheck, FaAngleDown, FaAngleUp, FaLightbulb,FaProductHunt ,FaRoute ,
-  FaPlay, FaSearch, FaFilter, FaCarSide,FaIdCard,FaBookReader,FaCheckSquare,FaUserCheck  
+  FaPlay, FaSearch, FaFilter, FaCarSide,FaIdCard,FaBookReader,FaCheckSquare,FaUserCheck, FaEnvelope  
 } from 'react-icons/fa';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
@@ -15,6 +15,11 @@ import Invoice_Image from '../assets/Workflow_UA/3_Invoice_Processing.png'
 import Product_Image from '../assets/Workflow_UA/4_Product_Price_Comparison.png'
 import Resume_Image from '../assets/Workflow_UA/5_Resume_Screening.png'
 import Customer_Image from '../assets/Workflow_UA/6_Customer_Feedback_Analysis.png'
+import LinkedIn_Automation from '../assets/Workflow_UA/7_LinkedIn_Automation.png'
+import Scholarship from '../assets/Workflow_UA/10_Scholarship.png'
+import ID_Generation from '../assets/Workflow_UA/13_ID_Generation.png'
+import Product_Warranty from '../assets/Workflow_UA/14_Product_Warranty.png'
+import Utility_Image from '../assets/Workflow_UA/17_Utility_Bills_Using_OCR.png'
 
 // Zoomed Image Modal Component
 const ZoomedImageModal = ({ isOpen, onClose, imageSrc, alt }) => {
@@ -58,10 +63,13 @@ const ZoomedImageModal = ({ isOpen, onClose, imageSrc, alt }) => {
   );
 };
 // Trigger Modal Component for File and Extra Inputs
-const TriggerModal = ({ product, isOpen, onClose, onTrigger, isTriggering, extraField1, extraField2, extraField3, extraField4, extraField5, extraField6, setExtraField1, setExtraField2, setExtraField3, setExtraField4, setExtraField5, setExtraField6, setSelectedFile, triggerResponse, setFileData }) => {
+// Trigger Modal Component for File and Extra Inputs
+const TriggerModal = ({ product, isOpen, onClose, onTrigger, isTriggering, extraField1, extraField2, extraField3, extraField4, extraField5, extraField6, extraField7, extraField8, extraField9, setExtraField1, setExtraField2, setExtraField3, setExtraField4, setExtraField5, setExtraField6, setExtraField7, setExtraField8, setExtraField9, setSelectedFile, triggerResponse, setFileData }) => {
   if (!isOpen) return null;
 
-  const isSpecialProduct = ['flow_07', 'flow_08', 'flow_09', 'flow_10', 'flow_11', 'flow_12', 'flow_13', 'flow_14', 'flow_15', 'flow_16'].includes(product.id);
+  const isSpecialProduct = ['flow_08', 'flow_09', 'flow_11', 'flow_12', 'flow_15','flow_16'].includes(product.id);
+  const isUtilityBillProduct = product.id === 'flow_17';
+  const isScholarshipProduct = product.id === 'flow_10';
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -166,11 +174,42 @@ const TriggerModal = ({ product, isOpen, onClose, onTrigger, isTriggering, extra
               <FaClock style={{ fontSize: '50px', color: '#000000a5', marginBottom: '10px' }} />
               <p style={{ fontSize: '18px', fontWeight: 'bold' }}>Coming Soon</p>
             </div>
+          ) : isUtilityBillProduct ? (
+            <div style={{ textAlign: 'center', padding: '20px' }}>
+              <p style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>
+                Automated Utility Bill Processing              </p>
+              <p>Send your utility bill details to <a href="mailto:powerautomatedev@ubtiinc.com" style={{ color: '#4285f4', textDecoration: 'underline' }}>powerautomatedev@ubtiinc.com</a>. You'll be notified via email once processed.</p> 
+              <p style={{ fontSize: '16px', color: '#5f6368' }}>
+                  <strong>Note:</strong> Include "Reimbursement" in the email subject to trigger the workflow.              </p>
+            </div>
+          ) : isScholarshipProduct ? (
+            <div style={{ textAlign: 'center', padding: '20px' }}>
+              <p style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>
+                Please fill out the form to proceed.
+              </p>
+              <a
+                href="https://forms.office.com/Pages/ResponsePage.aspx?id=1gKFAHk_8EarN5NU4_6A_z93a04eEpZKr3J9JkCAks1UN1BRSjM3SlFLMU9LTjBTSktERDk1S1I3Vi4u" // Replace with actual form link
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#4285f4',
+                  textDecoration: 'underline',
+                  fontSize: '16px',
+                  marginBottom: '10px',
+                  display: 'inline-block'
+                }}
+              >
+                Scholarship Eligibility Form
+              </a>
+              <p style={{ fontSize: '16px', color: '#5f6368' }}>
+                Once you fill in the form, you'll be notified via email.
+              </p>
+            </div>
           ) : (
             <>
               <p className="modal-description">Provide the necessary inputs to trigger the {product.name} flow.</p>
               <div className="modal-inputs">
-                {product.id !== 'flow_06' && (
+                {product.id !== 'flow_06' && product.id !== 'flow_07' && product.id !== 'flow_13'&&(
                   <div className="upload-section">
                     <h3>File Upload</h3>
                     <input
@@ -257,6 +296,39 @@ const TriggerModal = ({ product, isOpen, onClose, onTrigger, isTriggering, extra
                     </div>
                   </div>
                 )}
+                {product.id === 'flow_07' && (
+                  <div className="extra-inputs">
+                    <h3>Enter the Information</h3>
+                    <input
+                      type="text"
+                      placeholder="Enter the Job to Search"
+                      value={extraField9}
+                      onChange={(e) => setExtraField9(e.target.value)}
+                    />
+                  </div>
+                )}
+                {product.id === 'flow_13' && (
+                  <div className="extra-inputs">
+                    <h3>Additional Information</h3>
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={extraField8}
+                      onChange={(e) => setExtraField8(e.target.value)}
+                    />
+                  </div>
+                )}
+                {product.id === 'flow_14' && (
+                  <div className="extra-inputs">
+                    <h3>Additional Information</h3>
+                    <input
+                      type="text"
+                      placeholder="User Query"
+                      value={extraField7}
+                      onChange={(e) => setExtraField7(e.target.value)}
+                    /><p></p>
+                  </div>
+                )}
               </div>
               
               {triggerResponse && (
@@ -264,27 +336,28 @@ const TriggerModal = ({ product, isOpen, onClose, onTrigger, isTriggering, extra
                   {renderResponseContent(triggerResponse)}
                 </div>
               )}
-              
-              <div className="modal-actions">
-                <button 
-                  className={`btn btn-primary ${isTriggering ? 'btn-loading' : ''}`} 
-                  onClick={() => onTrigger(product)}
-                  disabled={isTriggering}
-                >
-                  {isTriggering ? (
-                    <span>Running...</span>
-                  ) : (
-                    <>
-                      <FaPlay className="btn-icon-left" /> Trigger Flow
-                    </>
-                  )}
-                </button>
-                <button className="btn btn-secondary" onClick={onClose}>
-                  Cancel
-                </button>
-              </div>
             </>
           )}
+          {!isSpecialProduct && !isUtilityBillProduct && !isScholarshipProduct && (
+          <div className="modal-actions">
+            <button 
+              className={`btn btn-primary ${isTriggering ? 'btn-loading' : ''}`} 
+              onClick={() => onTrigger(product)}
+              disabled={isTriggering}
+            >
+              {isTriggering ? (
+                <span>Running...</span>
+              ) : (
+                <>
+                  <FaPlay className="btn-icon-left" /> Trigger Flow
+                </>
+              )}
+            </button>
+            <button className="btn btn-secondary" onClick={onClose}>
+              Cancel
+            </button>
+          </div>
+        )}
         </div>
       </motion.div>
     </motion.div>
@@ -294,7 +367,7 @@ const TriggerModal = ({ product, isOpen, onClose, onTrigger, isTriggering, extra
 const ProductModal = ({ product, isOpen, onClose, onImageZoom }) => {
   if (!isOpen) return null;
   
-  const isSpecialProduct = ['flow_07', 'flow_08', 'flow_09', 'flow_10', 'flow_11', 'flow_12', 'flow_13', 'flow_14', 'flow_15', 'flow_16'].includes(product.id);
+  const isSpecialProduct = ['flow_08', 'flow_09', 'flow_11', 'flow_12', 'flow_15','flow_16'].includes(product.id);
 
   return (
     <motion.div
@@ -869,6 +942,9 @@ const Products = () => {
   const [extraField4, setExtraField4] = useState('');
   const [extraField5, setExtraField5] = useState('');
   const [extraField6, setExtraField6] = useState('');
+  const [extraField7, setExtraField7] = useState('');
+  const [extraField8, setExtraField8] = useState('');
+  const [extraField9, setExtraField9] = useState('');
   const [fileData, setFileData] = useState({});
   const [isZoomedImageOpen, setIsZoomedImageOpen] = useState(false);
   const [zoomedImage, setZoomedImage] = useState(null);
@@ -886,7 +962,7 @@ const Products = () => {
       id: 'solutions', 
       label: 'Industry Solutions', 
       icon: <FaClipboardList />, 
-      categories: ['Retail', 'Insurance', 'FinTech', 'HR', 'Marketing', 'Sales', 'E-Commerce', 'Healthcare', 'Logistics', 'Education'] 
+      categories: ['Retail', 'Insurance', 'FinTech', 'HR', 'Marketing', 'Sales', 'E-Commerce', 'Healthcare', 'Logistics', 'Education','Finance'] 
     },
     { 
       id: 'platforms', 
@@ -1209,7 +1285,7 @@ const Products = () => {
       status: 'soon',
       isPopular: true,
       icon: <FaIdCard  />,
-      gradient: 'linear-gradient(135deg, #4285f4, #1a73e8)',
+      gradient: 'linear-gradient(135deg, #fbbc05, #f57c00)',
       image: QR_Image 
     },
     {
@@ -1229,7 +1305,7 @@ const Products = () => {
       status: 'soon',
       isPopular: true,
       icon: <FaProductHunt  />,
-      gradient: 'linear-gradient(135deg, #E573B3, #B33C86)',
+      gradient: 'linear-gradient(135deg, #4285f4, #1a73e8)                            ',
       image: Insurance_Image
     },
     {
@@ -1249,7 +1325,7 @@ const Products = () => {
       status: 'soon',
       isPopular: true,
       icon: <FaDisease  />,
-      gradient: 'linear-gradient(135deg, #ff5252, #d81b60)',
+      gradient: 'linear-gradient(135deg, #66bb6a, #2e7d32)',
       image: Customer_Image
     },
     {
@@ -1269,9 +1345,30 @@ const Products = () => {
       status: 'soon',
       isPopular: true,
       icon: <FaClipboardList />,
-      gradient: 'linear-gradient(135deg, #66bb6a, #2e7d32)',
+      gradient: 'linear-gradient(135deg, #ff5252, #d81b60)',
       image: Resume_Image
+    },
+       {
+      id: 'flow_17',
+      name: 'Utility Bills using OCR for Claim expenses ',
+      description: 'This workflow uses OCR and bots to extract utility bill details, validate them, auto-fill reimbursement forms, and route approvals as needed.',
+      longdescription: 'This workflow uses OCR and BOT Automation to extract key details from photos of utility bills submitted for reimbursement claissms. It verifies the details against pre-defined limits, auto-fills the reimbursement forms, and submits it to the Finance Team while notifying the employee for verification. If any issue arises, it automatically routes the claim to the employee’s manager for approval. ',
+      client: 'Global Tech Enterprises that deal with remote employees and need efficient reimbursement processes. ',
+      Challenges: ['Time consuming Data entry and verification,High Risk of errors','Delays in approvals and reimbursements','Inefficient handling of documentation' ,'Compliance and Fraud risks,Employee and Administrative burden'],
+      Solution: ['Automated Data extraction using OCR – Eliminates manual data entry and reducing processing time for each claim','BOT-driven validation and standardization','AI-Powered Error detection','Cloud-based storage management','Automated Limited checks and Fraud detection','Role-based Automation'],
+      highlevel: ['OCR', 'Email ', 'Dataverse'],
+      accuracy: '98%',
+      timesaved: '80%',
+      costreduced: '60%',
+      category1: 'Finance',
+      category2: 'HR',
+      status: 'active',
+      isPopular: true,
+      icon: <FaFileInvoiceDollar />,
+      gradient: 'linear-gradient(135deg, #E573B3, #B33C86)',
+      image: Utility_Image
     }
+    
   ];
   
   const filteredProducts = activeTab === 'all'
@@ -1350,6 +1447,11 @@ const Products = () => {
           'Content-Type': 'application/json'
         }
       });
+      // const response = await axios.post('http://localhost:5000/trigger-flow', payload, {
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // });
 
       setTriggerStatus({
         success: response.data.success,
@@ -2569,6 +2671,9 @@ const Products = () => {
               setExtraField4('');
               setExtraField5('');
               setExtraField6('');
+              setExtraField7('');
+              setExtraField8('');
+              setExtraField9('');
               setTriggerResponse(null);
             }}
             onTrigger={handleTriggerFlow}
@@ -2579,12 +2684,18 @@ const Products = () => {
             extraField4={extraField4}
             extraField5={extraField5}
             extraField6={extraField6}
+            extraField7={extraField7}
+            extraField8={extraField8}
+            extraField9={extraField9}
             setExtraField1={setExtraField1}
             setExtraField2={setExtraField2}
             setExtraField3={setExtraField3}
             setExtraField4={setExtraField4}
             setExtraField5={setExtraField5}
             setExtraField6={setExtraField6}
+            setExtraField7={setExtraField7}
+            setExtraField8={setExtraField8}
+            setExtraField9={setExtraField9}
             setSelectedFile={setSelectedFile}
             triggerResponse={triggerResponse}
             setFileData={(data) => setFileData(prev => ({ ...prev, [selectedProduct.id]: data ? { data, filename: selectedFile?.name } : null }))}
